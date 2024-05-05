@@ -9,7 +9,6 @@ class CardWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-  
         width: MediaQuery.of(context).size.width,
        child: Card(
         margin: EdgeInsets.zero,
