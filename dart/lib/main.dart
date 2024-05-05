@@ -18,6 +18,7 @@ class ChuvaDart extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const Teste(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
