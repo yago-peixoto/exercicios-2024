@@ -69,15 +69,16 @@ class _CalendarState extends State<Calendar> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: const Padding(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-                          child: Icon(Icons.calendar_month),
-                        ),),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: const Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                        child: Icon(Icons.calendar_month),
+                      ),
+                    ),
                   ),
                   SizedBox(
                     width: MediaQuery.sizeOf(context).width * 0.6,
@@ -92,61 +93,86 @@ class _CalendarState extends State<Calendar> {
           ],
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const CardWidget(
-                cabecalho: 'cabecalho',
-                titulo: 'titulo',
-                autor: 'autor',
-                cor: Colors.pink),
-            const Text(
-              'Programação',
-            ),
-            const Text(
-              'Nov',
-            ),
-            const Text(
-              '2023',
-            ),
-            OutlinedButton(
-              onPressed: () {
-                _changeDate(DateTime(2023, 11, 26));
-              },
-              child: Text(
-                '26',
-                style: Theme.of(context).textTheme.headlineMedium,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Text(
+                      'Nov',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    Text(
+                      '2023',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            OutlinedButton(
-              onPressed: () {
-                _changeDate(DateTime(2023, 11, 28));
-              },
-              child: Text(
-                '28',
-                style: Theme.of(context).textTheme.headlineMedium,
+              Container(
+                color: Colors.blue,
+                height: MediaQuery.sizeOf(context).height * 0.07,
+                width: MediaQuery.sizeOf(context).width * 0.8636,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: 5,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    const data = 26;
+
+                    return Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        Container(
+                          child: Row(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  print('cliquei $index');
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 20),
+                                  child: Text(
+                                    '${data + index}',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          color: Colors.grey,
+                          height: 3,
+                          width: 52,
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
-            ),
-            if (_currentDate.day == 26)
-              OutlinedButton(
-                  onPressed: () {
-                    setState(() {
-                      _clicked = true;
-                    });
-                  },
-                  child: const Text('Mesa redonda de 07:00 até 08:00')),
-            if (_currentDate.day == 28)
-              OutlinedButton(
-                  onPressed: () {
-                    setState(() {
-                      _clicked = true;
-                    });
-                  },
-                  child: const Text('Palestra de 09:30 até 10:00')),
-            if (_currentDate.day == 26 && _clicked) const Activity(),
-          ],
-        ),
+            ],
+          ),
+          const CardWidget(
+            cabecalho: 'cabecalho',
+            titulo: 'titulo',
+            autor: 'autor',
+            cor: Colors.pink,
+          ),
+        ],
       ),
     );
   }
