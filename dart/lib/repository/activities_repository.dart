@@ -1,11 +1,22 @@
 import 'dart:convert';
 
+
+import 'package:chuva_dart/models/activity_model.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ActivitiesRepository{
-  Future<void> loadJson() async{
+class ActivitiesRepository  {
+  ActivitiesRepository() {
+    loadJson();
+  }
+
+ ValueNotifier<ActivityModel?> activityModel = ValueNotifier(null);
+
+  Future<void> loadJson() async {
     String json = await rootBundle.loadString('assets/activities.json');
     final jsonResponse = jsonDecode(json);
-    print(jsonResponse);
+
+    activityModel.value = ActivityModel.fromJson(jsonResponse);
+
   }
 }

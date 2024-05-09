@@ -1,5 +1,8 @@
+import 'package:chuva_dart/repository/activities_repository.dart';
 import 'package:chuva_dart/shared/widgets/card_widget.dart';
 import 'package:flutter/material.dart';
+
+
 
 void main() {
   runApp(const ChuvaDart());
@@ -18,28 +21,23 @@ class ChuvaDart extends StatelessWidget {
             seedColor: const Color.fromARGB(255, 32, 44, 61)),
         useMaterial3: true,
       ),
-      home: const Calendar(),
+      home:  Calendar(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class Calendar extends StatefulWidget {
-  const Calendar({super.key});
+  
+  ActivitiesRepository activitiesRepository = ActivitiesRepository();
+   Calendar({super.key});
 
   @override
   State<Calendar> createState() => _CalendarState();
 }
 
 class _CalendarState extends State<Calendar> {
-  DateTime _currentDate = DateTime(2023, 11, 26);
-  bool _clicked = false;
 
-  void _changeDate(DateTime newDate) {
-    setState(() {
-      _currentDate = newDate;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -166,11 +164,16 @@ class _CalendarState extends State<Calendar> {
               ),
             ],
           ),
-          const CardWidget(
-            cabecalho: 'cabecalho',
-            titulo: 'titulo',
-            autor: 'autor',
-            cor: Colors.pink,
+          ValueListenableBuilder(
+            valueListenable: widget.activitiesRepository.activityModel,
+            builder: (context,activity,child) {
+              return  CardWidget(
+                cabecalho: '${activity?.type?.title?.ptBr ?? ''} de ${activity?.start ?? ''} até ${activity?.end ?? ''}' ,
+                titulo: activity?.title?.ptBr ??'' ,
+                autor: activity?.people?.first.name ??'',
+                cor: Colors.pink,
+              );
+            }
           ),
         ],
       ),
