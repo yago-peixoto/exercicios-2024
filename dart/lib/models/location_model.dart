@@ -1,8 +1,8 @@
-import 'package:chuva_dart/models/localized_model.dart';
+import 'package:chuva_dart/models/title_model.dart';
 
 class LocationModel {
   final int id;
-  final LocalizedStringModel? title;
+  final TitleModel? title;
   final int? parent;
   final dynamic map;
 
@@ -15,7 +15,7 @@ class LocationModel {
 
   factory LocationModel.fromJson(Map<String, dynamic> json) => LocationModel(
         id: json['id'] ?? 0,
-        title: json['title'] != null ? LocalizedStringModel.fromJson(json['title']) : null,
+        title: json['title'] != null ? TitleModel.fromJson(json['title']) : null,
         parent: json['parent'] ?? 0,
         map: json['map'],
       );

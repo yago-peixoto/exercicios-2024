@@ -1,8 +1,8 @@
-import 'package:chuva_dart/models/localized_model.dart';
+import 'package:chuva_dart/models/title_model.dart';
 
 class CategoryModel {
   final int id;
-  final LocalizedStringModel? title;
+  final TitleModel? title;
   final String? color;
   final String? backgroundColor;
 
@@ -15,7 +15,7 @@ class CategoryModel {
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
         id: json['id'] ?? 0,
-        title: json['title'] != null ? LocalizedStringModel.fromJson(json['title']) : null,
+        title: json['title'] != null ? TitleModel.fromJson(json['title']) : null,
         color: json['color'] ?? '#FFFFFF',
         backgroundColor: json['background-color'] ?? '#FFFFFF',
       );

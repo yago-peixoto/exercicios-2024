@@ -1,22 +1,19 @@
 import 'dart:convert';
 
 
-import 'package:chuva_dart/models/activity_model.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:chuva_dart/models/data_model.dart';
+import 'package:dio/dio.dart';
 
-class ActivitiesRepository  {
-  ActivitiesRepository() {
-    loadJson();
-  }
-
- ValueNotifier<ActivityModel?> activityModel = ValueNotifier(null);
-
-  Future<void> loadJson() async {
-    String json = await rootBundle.loadString('assets/activities.json');
-    final jsonResponse = jsonDecode(json);
-
-    activityModel.value = ActivityModel.fromJson(jsonResponse);
-
+class ActivitiesRepository {
+  
+  Future<DataModel> loadJson() async { 
+    Dio dio = Dio();
+    Response response = await dio.get(
+        'https://raw.githubusercontent.com/chuva-inc/exercicios-2023/master/dart/assets/activities.json');
+        
+   
+   final  dataModel = DataModel.fromJson(jsonDecode(response.data));
+   
+  return dataModel;
   }
 }

@@ -1,8 +1,8 @@
-import 'package:chuva_dart/models/localized_model.dart';
+import 'package:chuva_dart/models/title_model.dart';
 
 class TypeModel {
   final int id;
-  final LocalizedStringModel? title;
+  final TitleModel? title;
 
   TypeModel({
     required this.id,
@@ -11,6 +11,6 @@ class TypeModel {
 
   factory TypeModel.fromJson(Map<String, dynamic> json) => TypeModel(
         id: json['id'] ?? 0,
-        title: json['title'] != null ? LocalizedStringModel.fromJson(json['title']) : null,
+        title: json['title'] != null ? TitleModel.fromJson(json['title']) : null,
       );
 }

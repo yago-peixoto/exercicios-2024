@@ -1,8 +1,8 @@
-import 'localized_model.dart';
+import 'title_model.dart';
 
 class RoleModel {
   final int id;
-  final LocalizedStringModel? label;
+  final TitleModel? label;
 
   RoleModel({
     required this.id,
@@ -11,6 +11,6 @@ class RoleModel {
 
   factory RoleModel.fromJson(Map<String, dynamic> json) => RoleModel(
         id: json['id'] ?? 0,
-        label: json['label'] != null ? LocalizedStringModel.fromJson(json['label']) : null,
+        label: json['label'] != null ? TitleModel.fromJson(json['label']) : null,
       );
 }

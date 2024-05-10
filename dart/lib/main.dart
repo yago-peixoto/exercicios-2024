@@ -1,7 +1,9 @@
-import 'package:chuva_dart/repository/activities_repository.dart';
-import 'package:chuva_dart/shared/widgets/card_widget.dart';
-import 'package:flutter/material.dart';
 
+import 'package:chuva_dart/controllers/data_controller.dart';
+import 'package:chuva_dart/shared/widgets/card_widget.dart';
+import 'package:chuva_dart/shared/widgets/string_extension.dart';
+
+import 'package:flutter/material.dart';
 
 
 void main() {
@@ -21,22 +23,29 @@ class ChuvaDart extends StatelessWidget {
             seedColor: const Color.fromARGB(255, 32, 44, 61)),
         useMaterial3: true,
       ),
-      home:  Calendar(),
+      home: Calendar(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class Calendar extends StatefulWidget {
-  
-  ActivitiesRepository activitiesRepository = ActivitiesRepository();
-   Calendar({super.key});
+ 
+  Calendar({super.key});
 
   @override
   State<Calendar> createState() => _CalendarState();
 }
 
 class _CalendarState extends State<Calendar> {
+   DataController dataController = DataController();
+
+  @override
+  initState()  {
+    super.initState();
+ dataController.getData();
+  }
+
 
 
   @override
@@ -164,16 +173,30 @@ class _CalendarState extends State<Calendar> {
               ),
             ],
           ),
-          ValueListenableBuilder(
-            valueListenable: widget.activitiesRepository.activityModel,
-            builder: (context,activity,child) {
-              return  CardWidget(
-                cabecalho: '${activity?.type?.title?.ptBr ?? ''} de ${activity?.start ?? ''} até ${activity?.end ?? ''}' ,
-                titulo: activity?.title?.ptBr ??'' ,
-                autor: activity?.people?.first.name ??'',
-                cor: Colors.pink,
-              );
-            }
+         
+          Expanded(
+            child: AnimatedBuilder(
+              animation: dataController,
+              builder: (_,__) {
+                final data =dataController.dataModel.data;
+                if ( data.isEmpty) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+               return ListView.builder(itemCount: data.length,
+               
+               itemBuilder: (context, index) {
+                  return CardWidget(
+                  cabecalho: ' de ${dataController.dataModel.data[index].start.toFormattedHourString()} até ${dataController.dataModel.data[index].end.toFormattedHourString()}',
+                  titulo: dataController.dataModel.data[index].titleModel.ptBr ,
+                  autor: '',
+                  cor: Colors.pink,
+                );
+               },
+               );
+              }
+            ),
           ),
         ],
       ),
